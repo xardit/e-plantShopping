@@ -10,6 +10,7 @@ function ProductList() {
   const [showPlants, setShowPlants] = useState(false) // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({})
   const dispatch = useDispatch()
+  // Initialize the cart items state in the Redux store.
   const cart = useSelector((state) => state.cart.items)
 
   const plantsArray = [
@@ -259,6 +260,7 @@ function ProductList() {
   }
 
   const handleAddToCart = (product) => {
+    // Dispatch the addItem action to add items to the cart.
     dispatch(addItem(product))
     setAddedToCart((prevState) => ({
       ...prevState,
@@ -311,6 +313,7 @@ function ProductList() {
                     id='mainIconPathAttribute'
                   ></path>
                 </svg>
+                {/* Retrieve the quantity of all the items in the cart from the Redux store. */}
                 {cart.reduce((prev, { quantity }) => prev + quantity, 0) || ''}
               </h1>
             </a>

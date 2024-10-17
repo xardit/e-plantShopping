@@ -23,22 +23,25 @@ const CartItem = ({ onContinueShopping }) => {
   }
 
   const handleIncrement = (item) => {
+    // Dispatch the updateQuantity action to update the quantity of the cart item.
     dispatch(updateQuantity({ ...item, quantity: item.quantity + 1 }))
   }
 
   const handleDecrement = (item) => {
+    // Dispatch the updateQuantity action to update the quantity of the cart item.
     if (item.quantity > 0) {
       dispatch(updateQuantity({ ...item, quantity: item.quantity - 1 }))
     }
   }
 
   const handleRemove = (item) => {
+    // Dispatch the removeItem action to remove the item from the cart.
     dispatch(removeItem(item.name))
   }
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
-    return item.quantity * item.cost.slice(1)
+    return item.quantity * item.cost.slice(1) // remove "$" sign from the cost string
   }
 
   const handleCheckoutShopping = (e) => {
