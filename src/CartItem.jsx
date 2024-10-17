@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeItem, updateQuantity } from './CartSlice'
@@ -8,18 +9,41 @@ const CartItem = ({ onContinueShopping }) => {
   const dispatch = useDispatch()
 
   // Calculate total amount for all products in the cart
-  const calculateTotalAmount = () => {}
+  const calculateTotalAmount = () => {
+    console.log('cart :>> ', cart)
+    const total = cart.reduce((prev, { quantity, cost }) => {
+      const itemcost = quantity * parseInt(cost.slice(1))
+      return prev + itemcost
+    }, 0)
+    return total
+  }
 
-  const handleContinueShopping = (e) => {}
+  const handleContinueShopping = (e) => {
+    onContinueShopping(e)
+  }
 
-  const handleIncrement = (item) => {}
+  const handleIncrement = (item) => {
+    dispatch(updateQuantity({ ...item, quantity: item.quantity + 1 }))
+  }
 
-  const handleDecrement = (item) => {}
+  const handleDecrement = (item) => {
+    if (item.quantity > 0) {
+      dispatch(updateQuantity({ ...item, quantity: item.quantity - 1 }))
+    }
+  }
 
-  const handleRemove = (item) => {}
+  const handleRemove = (item) => {
+    dispatch(removeItem(item.name))
+  }
 
   // Calculate total cost based on quantity for an item
-  const calculateTotalCost = (item) => {}
+  const calculateTotalCost = (item) => {
+    return item.quantity * item.cost.slice(1)
+  }
+
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference')
+  }
 
   return (
     <div className='cart-container'>
@@ -60,7 +84,9 @@ const CartItem = ({ onContinueShopping }) => {
           Continue Shopping
         </button>
         <br />
-        <button className='get-started-button1'>Checkout</button>
+        <button className='get-started-button1' onClick={(e) => handleCheckoutShopping(e)}>
+          Checkout
+        </button>
       </div>
     </div>
   )
